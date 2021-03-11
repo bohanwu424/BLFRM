@@ -1,7 +1,7 @@
 # BLFRM
 R code for implementing Bayesian Linear Factor Regression Model (BLFRM). 
 
-This README describes code that realizes the model "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson.
+The model is inspired by "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson.
 
 
 ## Data
