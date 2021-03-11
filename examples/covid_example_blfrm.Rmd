@@ -35,7 +35,7 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 ```
 
-This document includes a brief demonstration of the Bayesian Linear Factor Regression method for COVID19 fatality data. This data uses the daily new fatality count of COVID19 across 145 Texas counties unitl 12/02/2020.
+This document includes a brief demonstration of the Bayesian Latent Factor Regression method for COVID19 fatality data. This data uses the daily new fatality count of COVID19 across 145 Texas counties unitl 12/02/2020.
 The covariate matrix X include scaled county-wise population and mobility data.
 
 ## Example data
