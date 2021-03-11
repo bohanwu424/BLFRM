@@ -76,6 +76,8 @@ X = XY_df %>%
   distinct() %>%
   as.matrix()
 
+#Replace na with 0
+X[is.na(X)] <- 0
 #------------------------------------------------------
 # Save the X, Y, Ytot, tau, and the survey weights:
 save(X, Y, file = paste('data/pa_covid19.RData', sep=''))

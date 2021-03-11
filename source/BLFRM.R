@@ -22,9 +22,13 @@ BLFRM = function(X,Y,nu = 5,k = 5,a_sigma = 0.5, b_sigma = 0.5,a_psi = 0.5, b_ps
 
 n = nrow(Y);T = ncol(Y);r = ncol(X)
 
+#Non-na entries in Y
+Ts = sapply(seq(nrow(Y)), function(i) sum(!is.na(Y[i,])))  
+
 # Basis matrix:
-Bmat =get_Bmat(T)
-p = ncol(Bmat)
+Bm = get_Bmat(Y)$B
+Bmat =get_Bmat(Y)$Bmat
+p = ncol(Bm)
 
 #Initialize Lambda, Phi, Tau with MGP
 MGP_init = MGP(nu, a1 = a1, a2 = a2, k = k ,P =p) 
@@ -47,7 +51,7 @@ post_Delta[,,1] = rmvnorm(n, mean = rep(0,k),sigma = diag(k)) #n by k
 post_Beta[,,1] =  rmvnorm(k,sigma = diag(rgamma(r,1/2,1/2)))#k by r 
 post_Eta[,,1] = t(post_Beta[,,1]%*%t(X)) + post_Delta[,,1] #n by k
 post_Theta[,,1] = sapply(seq(n), function(i) Lambda%*% post_Eta[i,,1] + Zeta[i,]) #p by n
-post_Yhat[,,1] =  t(sapply(seq(n),function(i)rmvnorm(1,Bmat%*%post_Theta[,i,1],psi2[1]*diag(T)))) #n by T
+post_Yhat[,,1] =  t(sapply(seq(n),function(i)rmvnorm(1,Bm%*%post_Theta[,i,1],psi2[1]*diag(T)))) #n by T
 
 for(i in seq(2,S)){
   for(j in seq(p)){
@@ -82,8 +86,8 @@ for(i in seq(2,S)){
   post_Sigma[,,i] =  diag(1/Sigma)
   
   #3): Update psi
-  y = as.vector(Y)
-  y_hat = as.vector(t(Bmat %*% post_Theta[,,i - 1]))
+  y = as.vector(Y)%>% na.exclude()
+  y_hat = sapply(seq(n),function(j) Bmat[[j]] %*% post_Theta[,j,i - 1]) %>% unlist()
   psi2[i]  = 1/rgamma(1,a_psi + n*T/2,crossprod(y - y_hat)/2 + b_psi)
   #4)Update beta and w
   for(j in 1:k){
@@ -97,26 +101,26 @@ for(i in seq(2,S)){
   #5) Update eta
   for(j in 1:n){
     #recurring term
-    M = t(Lambda)%*%t(Bmat)%*%solve(psi2[i]*diag(T) + Bmat%*%post_Sigma[,,i]%*%t(Bmat)) 
-    A = M %*%Bmat%*%Lambda + diag(k)
-    B = post_Beta[,,i]%*%X[j,] + M %*% Y[j,]
+    M = t(Lambda)%*%t(Bmat[[j]])%*%solve(psi2[i]*diag(Ts[j]) + Bmat[[j]]%*%post_Sigma[,,i]%*%t(Bmat[[j]]))
+    A = M %*%Bmat[[j]]%*%Lambda + diag(k)
+    B = post_Beta[,,i]%*%X[j,] + M %*% na.exclude(Y[j,])
     post_Eta[j,,i] = rmvnorm(1,solve(A)%*%B, solve(A))
   }
   
   #Update theta
   for(j in 1:n){
-    Q_theta = 1/psi2[i]*crossprod(Bmat) + solve(post_Sigma[,,i])
-    l_theta = 1/psi2[i]*t(Bmat)%*%Y[j,] +  solve(post_Sigma[,,i])%*%Lambda%*%post_Eta[j,,i]
+    Q_theta = 1/psi2[i]*crossprod(Bmat[[j]]) + solve(post_Sigma[,,i])
+    l_theta = 1/psi2[i]*t(Bmat[[j]])%*% na.exclude(Y[j,])+  solve(post_Sigma[,,i])%*%Lambda%*%post_Eta[j,,i]
     post_Theta[,j,i] = rmvnorm(1,solve(Q_theta)%*%l_theta,solve(Q_theta))
   }
   
   #Update y_hat
-  post_Yhat[,,i] =  t(sapply(seq(n),function(j)rmvnorm(1,Bmat%*%post_Theta[,j,i],psi2[i]*diag(T)))) 
+  post_Yhat[,,i] =  t(sapply(seq(n),function(j)rmvnorm(1,Bm%*%post_Theta[,j,i],psi2[i]*diag(T)))) 
 }
 return(list(post_Sigma = post_Sigma,
             post_Delta = post_Delta,
             post_Beta = post_Beta,
             post_Eta = post_Eta,
             post_Theta = post_Theta,
-            post_Yhat = post_Yhat))
+            post_Yhat = post_Yhat),B = Bm)
 }
