@@ -1,13 +1,13 @@
 source(here::here("source", "BLFRM_Utilities.R"))
 BLFRM = function(X,Y,nu = 5,k = 5,a_sigma = 0.5, b_sigma = 0.5,a_psi = 0.5, b_psi = 0.5,a1 = 2, a2 = 3,
                  S = 10000){
-  # inputs:
-  #   X--data.frame with external covariates
-  #   Y--functional data.frame 
-  #   nu,a_1,a_2--parameters of the multiplicative gamma process
-  #   a_sigma,b_sigma--parameters for sigma term prior
-  #   a_psi,b_psi--parameters for psi term prior
-  #   k--how many FPCs/functional prototypes to estimate
+# inputs:
+#   X--data.frame with external covariates
+#   Y--functional data.frame 
+#   nu,a_1,a_2--parameters of the multiplicative gamma process
+#   a_sigma,b_sigma--parameters for sigma term prior
+#   a_psi,b_psi--parameters for psi term prior
+#   k--how many FPCs/functional prototypes to estimate
 
 # returns a list with elements
 #   post_Sigma: posterior for Sigma
