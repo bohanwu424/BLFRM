@@ -1,5 +1,5 @@
 ---
-title: "nhanes_example_blfrm"
+title: "covid_example_blfrm"
 author: "Bohan Wu"
 date: "3/10/2021"
 output: pdf_document
