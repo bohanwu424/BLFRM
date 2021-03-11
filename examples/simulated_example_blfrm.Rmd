@@ -1,0 +1,87 @@
+---
+title: "nhanes_example_narfd"
+author: "Bohan Wu"
+date: "3/8/2021"
+output: html_document
+---
+
+---
+title: "Poisson FPCA example"
+output: html_notebook
+---
+
+```{r}
+#install.packages(c("fda", "coda", "truncdist", "mvtnorm", "dplyr","tidyverse", "dfosr"))
+```
+```{r setup, include=FALSE}
+library(dfosr)
+library(tidyverse)
+source(here::here("source", "BLFRM.R"))
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
+
+This document includes a brief demonstration of the Bayesian Linear Factor Regression method for simulated data. The data was generated using methods included in the "dfosr" package. 
+
+## Example data
+
+data simulated with "dfosr" package
+
+```{r}
+n = 200 # Number of subjects
+T = 50  # Number of observation points
+p_0 = 10 # Number of true zero regression coefficients
+p_1 = 10 # Number of true nonzero regression coefficients
+
+# Simulate and store the output:
+sim_data = simulate_dfosr(T = n, m = T, p_0 = p_0, p_1 = p_1)
+Y = sim_data$Y; X = sim_data$X ; tau = sim_data$tau;
+
+plot_F(Y)
+```
+## Fit BLFRM
+
+Next we fit the proposed method using the `BLFRM()` function. 
+
+```{r}
+source(here::here("source", "BLFRM.R"))
+blfrm_results <- BLFRM(X,Y,k= 5,S = 1000)
+
+```
+
+The plot below shows:
+1) the curve posterior means with posterior credible intervals (pointwise and joint), the observed data, and true curves 
+```{r}
+nburn = 5000
+```
+
+```{r}
+samples = sample(seq(n), 3,replace = TRUE)
+plot_F(Y[samples,],alpha = 2,col= TRUE)
+```
+```{r}
+for(s in samples){
+plot_fitted(Y[s,], rowMeans(blfrm_results$post_Yhat[s,,-seq(nburn)]), t(blfrm_results$post_Yhat[s,,-seq(nburn)]), y_true = Y[s,], t01 = NULL,
+  include_joint_bands = FALSE)
+}
+```
+2)Compute the summary statistics for the effective sample size (ESS) across posterior samples for beta,theta
+```{r}
+aperm(blfrm_results$post_Theta[,,-seq(nburn)], c(3,2,1))%>%getEffSize()
+```
