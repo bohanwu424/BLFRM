@@ -1,16 +1,12 @@
 ---
-title: "nhanes_example_narfd"
+title: "simulated_example_blfrm"
 author: "Bohan Wu"
 date: "3/8/2021"
 output: html_document
 ---
 
----
-title: "Poisson FPCA example"
-output: html_notebook
----
-
 ```{r}
+#install.packages(c("fda", "coda", "truncdist", "mvtnorm", "dplyr","tidyverse"))
 #library(devtools)
 #install_github('drkowal/dfosr')
 ```
