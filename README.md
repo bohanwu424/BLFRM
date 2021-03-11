@@ -1,5 +1,5 @@
 # BLFRM
-Code for implementing Bayesian Linear Factor Regression Model. 
+Code for implementing Bayesian Linear Factor Regression Model (BLFRM). 
 
 This README describes code that realizes "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson
 
