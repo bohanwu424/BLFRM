@@ -1,16 +1,12 @@
 ---
-title: "nhanes_example_narfd"
+title: "nhanes_example_blfrm"
 author: "Bohan Wu"
-date: "3/8/2021"
-output: html_document
----
-
----
-title: "Poisson FPCA example"
-output: html_notebook
+date: "3/10/2021"
+output: pdf_document
 ---
 
 ```{r}
+#install.packages(c("fda", "coda", "truncdist", "mvtnorm", "dplyr","tidyverse"))
 #library(devtools)
 #install_github('drkowal/dfosr')
 ```
@@ -36,42 +32,38 @@ scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
 ```
 
-This document includes a brief demonstration of the Bayesian Linear Factor Regression method for simulated data. The data was generated using methods included in the "dfosr" package. 
+This document includes a brief demonstration of the Bayesian Linear Factor Regression method for COVID19 fatality data. This data uses the daily new fatality count of COVID19 across 145 Texas counties unitl 12/02/2020.
+The covariate matrix X include scaled county-wise population and mobility data.
 
 ## Example data
-
-data simulated with "dfosr" package
-
+Observations are included in `./data/pa_covid.RData`. We are primarily interested in the X and Y matrices in the dataset.
+These data are imported and plotted in the code chunk below.
 ```{r}
-n = 200 # Number of subjects
-T = 50  # Number of observation points
-p_0 = 10 # Number of true zero regression coefficients
-p_1 = 10 # Number of true nonzero regression coefficients
-
-# Simulate and store the output:
-sim_data = simulate_dfosr(T = n, m = T, p_0 = p_0, p_1 = p_1)
-Y = sim_data$Y; X = sim_data$X ; tau = sim_data$tau;
-
+load(here::here("data", "pa_covid19.RData"))
 plot_F(Y)
 ```
 ## Fit BLFRM
 
-Next we fit the proposed method using the `BLFRM()` function. 
+Next we fit the proposed method using the `BLFRM()` function and use a log(Y+1) transformation. 
 
 ```{r}
-blfrm_results <- BLFRM(X,Y,k= 5,S = 1000)
+source(here::here("source", "BLFRM.R"))
+blfrm_results <- BLFRM(X,log(Y+1),k= 5,S = 5000)
+dim(Y)
 ```
 
 The plot below shows:
 1) the curve posterior means with posterior credible intervals (pointwise and joint), the observed data, and true curves 
 ```{r}
-nburn = 5000
+nburn = 1000
+Yhat = blfrm_results$post_Yhat
 ```
 
 ```{r}
-samples = sample(seq(n), 3,replace = TRUE)
+samples = sample(seq(nrow(Y)), 3,replace = FALSE)
 plot_F(Y[samples,],alpha = 2,col= TRUE)
 ```
 ```{r}
@@ -80,7 +72,7 @@ plot_fitted(Y[s,], rowMeans(blfrm_results$post_Yhat[s,,-seq(nburn)]), t(blfrm_re
   include_joint_bands = FALSE)
 }
 ```
-2)Compute the summary statistics for the effective sample size (ESS) across posterior samples for beta,theta
+2)Compute the summary statistics for the effective sample size (ESS) across posterior samples for theta
 ```{r}
 aperm(blfrm_results$post_Theta[,,-seq(nburn)], c(3,2,1))%>%getEffSize()
 ```
