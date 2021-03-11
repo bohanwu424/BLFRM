@@ -8,9 +8,6 @@ BLFRM = function(X,Y,nu = 5,k = 5,a_sigma = 0.5, b_sigma = 0.5,a_psi = 0.5, b_ps
   #   a_sigma,b_sigma--parameters for sigma term prior
   #   a_psi,b_psi--parameters for psi term prior
   #   k--how many FPCs/functional prototypes to estimate
-  #   D--how many knots to use in spline basis
-  #   w--vector of observation weights
-  #   folds--integer, how many folds to use in cross-validation
 
 # returns a list with elements
 #   post_Sigma: posterior for Sigma
@@ -19,6 +16,7 @@ BLFRM = function(X,Y,nu = 5,k = 5,a_sigma = 0.5, b_sigma = 0.5,a_psi = 0.5, b_ps
 #   post_Eta: posterior for Eta
 #   post_Theta: posterior for Theta
 #   post_Yhat: posterior for Y_hat
+#   B: the full basis matrix
 
 n = nrow(Y);T = ncol(Y);r = ncol(X)
 
