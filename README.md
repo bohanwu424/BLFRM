@@ -1,5 +1,5 @@
 # BLFRM
-Code for implementing Bayesian Linear Factor Regression Model (BLFRM). 
+R code for implementing Bayesian Linear Factor Regression Model (BLFRM). 
 
 This README describes code that realizes "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson
 
@@ -16,7 +16,7 @@ The `source` subdirectory contains code used for fitting the BLFRM modelA. There
 
 * `BLFRM.R` contains the `BLFRM` function, and a description of that function. This is the primary user-facing function. 
 * `BLFRM_Utilities.R` contains various helper functions, including data visualization functions, functions for generating basis matrix, and a function to generate the posteriors of multiplicative gamma process (MGP). 
-
+* `process_covid.R` contains code for processing COVID19, Population and Mobility data, and organizing these data for analysis.
 The code has been tested on R version 4.0.2. To install packages required for BLFRM and the code in this supplement, please use:
 
 ```{r}
