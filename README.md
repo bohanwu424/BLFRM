@@ -27,4 +27,4 @@ install_github('drkowal/dfosr')
 
 ## Instructions for use
 
-The `examples` subdirectory contains two reproducible reports with similar structures. These implement the BLFRM model for the datasets described above, a plot showing the posterior mean, simultaneous and pointwise 95% credible bands for a single curve and results for effective sample size(Eff). The simulated data example is smaller and runs in less than 20 minutes, while the example of the processed COVID accelerometry data runs longer than one hour. 
+The `examples` subdirectory contains two reproducible reports with similar structures. These implement the BLFRM model for the datasets described above, create a plot showing the posterior mean, simultaneous and pointwise 95% credible bands for a single curve, and the results for effective sample size(Eff). The simulated data example is smaller and runs in less than 20 minutes, while the example of the processed COVID accelerometry data runs longer than one hour. 
