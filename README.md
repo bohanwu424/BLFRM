@@ -7,7 +7,7 @@ One can find the formulation of BLFRM in "Bayesian Latent Factor Regression for 
 ## Data
 
 The main analysis in the code uses processed COVID19 fatality count data (last updated 12/02/2020). The data can be found in the "data" directory. Details for processing the data can be found in the script "source/process_covid_data.R". 
-This supplement also includes a simulated dataset. The file named "simulated_example_blfrm" generates functional data response using the "dfosr" package; One can access the "dfosr" package here .https://rdrr.io/github/drkowal/dfosr/. Code to generate this dataset and others is included in this supplement. 
+This supplement also includes a simulated dataset. The file named "simulated_example_blfrm" generates functional data response using the "dfosr" package; One can learn more about the "dfosr" package at https://rdrr.io/github/drkowal/dfosr/. Code to generate this dataset and visualize posterior distribution is included in this package. 
 
 
 ## Code
