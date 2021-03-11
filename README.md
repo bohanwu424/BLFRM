@@ -20,7 +20,8 @@ The `source` subdirectory contains code used for fitting the BLFRM modelA. There
 The code has been tested on R version 4.0.2. To install packages required for BLFRM and the code in this supplement, please use:
 
 ```{r}
-install.packages(c("fda", "coda", "truncdist", "mvtnorm", "dplyr","tidyverse", "dfosr"))
+install.packages(c("fda", "coda", "truncdist", "mvtnorm", "dplyr","tidyverse")
+install_github('drkowal/dfosr')
 ```
 
 
