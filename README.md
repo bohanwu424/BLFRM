@@ -6,8 +6,7 @@ This README describes code that realizes "Bayesian Latent Factor Regression for 
 
 ## Data
 
-The main analysis in the code uses data from processed NHANES accelerometry data. Interested groups can access similar data here: https://github.com/andrew-leroux/rnhanesdata or apply to the repo owner for access. 
-
+The main analysis in the code uses data from processed COVID19 fatality count data. The data can be found in the "data" directory. Details for processing the data can be found in the script "source/process_covid_data.R". 
 This supplement also includes a simulated dataset. The file named "simulated_example_blfrm" generates functional data response using the "dfosr" package; One can access "dfosr" package here .https://rdrr.io/github/drkowal/dfosr/. Code to generate this dataset and others is included in this supplement. 
 
 
