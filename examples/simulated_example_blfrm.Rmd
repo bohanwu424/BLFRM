@@ -34,7 +34,7 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-This document includes a brief demonstration of the Bayesian Linear Factor Regression method for simulated data. The data was generated using methods included in the "dfosr" package. 
+This document includes a brief demonstration of the Bayesian Latent Factor Regression method for simulated data. The data was generated using methods included in the "dfosr" package. 
 
 ## Example data
 
