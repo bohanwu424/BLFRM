@@ -120,5 +120,6 @@ return(list(post_Sigma = post_Sigma,
             post_Beta = post_Beta,
             post_Eta = post_Eta,
             post_Theta = post_Theta,
-            post_Yhat = post_Yhat),B = Bm)
+            post_Yhat = post_Yhat,
+            B = Bm))
 }
