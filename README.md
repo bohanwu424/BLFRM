@@ -1,7 +1,7 @@
 # BLFRM
 An R package for implementing Bayesian Latent Factor Regression Model (BLFRM). 
 
-One can find the formulation of BLFRM in "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson.
+One can learn more about BLFRM in the paper "Bayesian Latent Factor Regression for Functional and Longitudinal Data" by Silvia Montagna, Surya T. Tokdar, Brian Neelon, and David B. Dunson.
 
 
 ## Data
